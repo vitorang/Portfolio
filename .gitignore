@@ -1,0 +1,4 @@
+*.yaml
+*.md
+*.mjs
+node_modules/

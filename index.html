@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Portfólio</title>
+  <style>
+    .hidden {
+      visibility: hidden;
+    }
+  </style>
+  <link rel="stylesheet" href="style.css">
+  <script src="dados.js"></script>
+  <script src="app.js"></script>
+</head>
+
+<body>
+  <div class="app-container hidden">
+    <aside class="sidebar">
+      <div class="sidebar-profile">
+        <div class="avatar-wrapper">
+          <img class="avatar" id="userAvatar" crossorigin="anonymous">
+        </div>
+
+        <div class="profile-text">
+          <h1 class="user-name" id="userName">Portfólio</h1>
+          <div class="user-role" id="userRole">Engenheiro de Software</div>
+        </div>
+      </div>
+
+      <div class="contacts-list" id="contactsList"></div>
+    </aside>
+
+    <main class="main-content">
+      <section class="content-section" id="sobre">
+        <div class="section-header">
+          <h2 class="section-title">Sobre mim</h2>
+        </div>
+        <p class="summary-content" id="bioText"></p>
+      </section>
+
+      <section class="content-section" id="experiencias">
+        <div class="section-header">
+          <h2 class="section-title">Experiência</h2>
+        </div>
+        <div class="experience-list" id="experienceList"></div>
+      </section>
+
+      <section class="content-section" id="formacao">
+        <div class="section-header">
+          <h2 class="section-title">Formação</h2>
+        </div>
+        <div class="education-list" id="educationList"></div>
+      </section>
+
+      <section class="content-section" id="habilidades">
+        <div class="section-header">
+          <h2 class="section-title">Habilidades</h2>
+        </div>
+        <div class="skills-columns" id="skillsContainer"></div>
+      </section>
+
+      <section class="content-section" id="projetos">
+        <div class="section-header">
+          <h2 class="section-title">Projetos</h2>
+        </div>
+        <div id="projectGlobalNote"></div>
+        <div class="project-list" id="projectList"></div>
+      </section>
+    </main>
+  </div>
+</body>
+
+</html>
