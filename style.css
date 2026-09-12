@@ -247,7 +247,8 @@ a:hover {
 .item-role-group {
   display: flex;
   align-items: baseline;
-  gap: 6px;
+  flex-wrap: wrap;
+  gap: 4px 6px;
 }
 
 .item-role {
@@ -454,7 +455,12 @@ a:hover {
 
   .item-header {
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
+  }
+
+  .item-role-group {
+    flex-wrap: wrap;
+    row-gap: 2px;
   }
 }
 
