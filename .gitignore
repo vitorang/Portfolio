@@ -2,3 +2,4 @@
 *.md
 *.mjs
 node_modules/
+*.ps1

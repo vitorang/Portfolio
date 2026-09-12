@@ -102,7 +102,7 @@ function renderizar(dados, autenticado) {
     }
 
     if (userNameEl) {
-        userNameEl.textContent = nomeExibicao || (lateral.usuarioGithub ? `@${lateral.usuarioGithub}` : 'Portfólio');
+        userNameEl.textContent = nomeExibicao || lateral.usuarioGithub;
     }
 
     if (userRoleEl && lateral.cargo) {
@@ -142,17 +142,19 @@ function renderizar(dados, autenticado) {
                 } else if (tipoLower.includes('github')) {
                     iconePath = 'assets/github.svg';
                     const usuario = c.valor.replace(/^https?:\/\/(www\.)?github\.com\//i, '').replace(/\/$/, '');
-                    linkHtml = `<a href="${c.valor}" target="_blank" rel="noopener noreferrer">@${usuario}</a>`;
+                    linkHtml = `<a href="${c.valor}" target="_blank" rel="noopener noreferrer">${usuario}</a>`;
                 } else if (tipoLower.includes('linkedin')) {
                     iconePath = 'assets/linkedin.svg';
                     const perfil = c.valor.replace(/^https?:\/\/(www\.)?linkedin\.com\/(in\/)?/i, '').replace(/\/$/, '');
-                    linkHtml = `<a href="${c.valor}" target="_blank" rel="noopener noreferrer">in/${perfil}</a>`;
+                    linkHtml = `<a href="${c.valor}" target="_blank" rel="noopener noreferrer">${perfil}</a>`;
                 } else if (String(c.valor).startsWith('http')) {
                     linkHtml = `<a href="${c.valor}" target="_blank" rel="noopener noreferrer">${c.valor.replace(/^https?:\/\/(www\.)?/, '')}</a>`;
                 }
 
+                const tipoClasse = tipoLower.replace(/[^a-z0-9]/g, '');
+
                 return `
-          <div class="contact-row">
+          <div class="contact-row contact-${tipoClasse}">
             <img src="${iconePath}" alt="${c.tipo}" class="contact-icon">
             <span class="contact-value">${linkHtml}</span>
           </div>
@@ -240,13 +242,15 @@ function renderizar(dados, autenticado) {
     const projContainer = document.getElementById('projectList');
     const globalNoteEl = document.getElementById('projectGlobalNote');
 
-    let notaGlobal = '';
-    if (typeof conteudo.projetos?.nota === 'string') notaGlobal = conteudo.projetos.nota;
-    else if (typeof conteudo.projetos?.nota?.valor === 'string') notaGlobal = conteudo.projetos.nota.valor;
+    let textoGlobal = '';
+    if (typeof conteudo.projetos?.texto === 'string') textoGlobal = conteudo.projetos.texto;
+    else if (typeof conteudo.projetos?.texto?.valor === 'string') textoGlobal = conteudo.projetos.texto.valor;
+    else if (typeof conteudo.projetos?.nota === 'string') textoGlobal = conteudo.projetos.nota;
+    else if (typeof conteudo.projetos?.nota?.valor === 'string') textoGlobal = conteudo.projetos.nota.valor;
 
     if (globalNoteEl) {
-        if (notaGlobal) {
-            globalNoteEl.innerHTML = `<div class="project-note" style="margin-bottom: 24px;">${notaGlobal.trim()}</div>`;
+        if (textoGlobal) {
+            globalNoteEl.innerHTML = `<p class="project-desc" style="margin-bottom: 24px;">${textoGlobal.trim()}</p>`;
         } else {
             globalNoteEl.innerHTML = '';
         }
