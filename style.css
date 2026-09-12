@@ -434,7 +434,7 @@ a:hover {
   color: var(--text-main) !important;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .app-container {
     flex-direction: column;
   }
@@ -457,10 +457,17 @@ a:hover {
     flex-direction: column;
     gap: 4px;
   }
+}
 
+@media (max-width: 550px) {
   .item-role-group {
-    flex-wrap: wrap;
-    row-gap: 2px;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 2px !important;
+  }
+
+  .role-separator {
+    display: none !important;
   }
 }
 

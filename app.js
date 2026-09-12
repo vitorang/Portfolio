@@ -180,7 +180,7 @@ function renderizar(dados, autenticado) {
           <div class="item-header">
             <div class="item-role-group">
               <span class="item-role">${exp.cargo}</span>
-              <span style="color: var(--text-muted);">–</span>
+              <span class="role-separator" style="color: var(--text-muted);">–</span>
               <span class="item-company">${exp.empresa}</span>
             </div>
             <span class="item-period">${exp.periodo}</span>
@@ -206,7 +206,7 @@ function renderizar(dados, autenticado) {
         <div class="item-header">
           <div class="item-role-group">
             <span class="item-role">${f.curso}</span>
-            <span style="color: var(--text-muted);">–</span>
+            <span class="role-separator" style="color: var(--text-muted);">–</span>
             <span class="item-company">${f.instituicao}</span>
           </div>
           <span class="item-period">${f.periodo}</span>
