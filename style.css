@@ -180,9 +180,7 @@ a:hover {
   height: var(--contact-icon-size);
   flex-shrink: 0;
   display: inline-block;
-  background-color: var(--brand-entity);
-  -webkit-mask: var(--icon-url) no-repeat center / contain;
-  mask: var(--icon-url) no-repeat center / contain;
+  fill: var(--brand-entity);
   opacity: 0.85;
 }
 
@@ -578,10 +576,9 @@ a:hover {
   }
 
   .contact-icon {
-    width: 24px !important;
-    height: 24px !important;
-    -webkit-mask-position: left center !important;
-    mask-position: left center !important;
+    width: 20px !important;
+    height: 20px !important;
+    fill: var(--brand-entity) !important;
   }
 
   .main-content {
@@ -591,6 +588,11 @@ a:hover {
 
   .content-section {
     break-inside: auto;
+  }
+
+  #formacao {
+    break-after: page !important;
+    page-break-after: always !important;
   }
 
   .content-item,
