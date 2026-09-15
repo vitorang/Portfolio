@@ -101,8 +101,20 @@ function renderizar(dados, autenticado) {
         else if (typeof lateral.nome.valor === 'string') nomeExibicao = lateral.nome.valor;
     }
 
+    let nomePdfExibicao = '';
+    if (lateral.nomePdf) {
+        if (typeof lateral.nomePdf === 'string') nomePdfExibicao = lateral.nomePdf;
+        else if (typeof lateral.nomePdf.valor === 'string') nomePdfExibicao = lateral.nomePdf.valor;
+    }
+
     if (userNameEl) {
-        userNameEl.textContent = nomeExibicao || lateral.usuarioGithub;
+        const nomePrincipal = nomeExibicao || lateral.usuarioGithub || 'Portfólio';
+        const nomePdfFinal = nomePdfExibicao || nomePrincipal;
+
+        userNameEl.innerHTML = `
+            <span class="name-web">${nomePrincipal}</span>
+            <span class="name-pdf">${nomePdfFinal}</span>
+        `;
     }
 
     if (userRoleEl && lateral.cargo) {
