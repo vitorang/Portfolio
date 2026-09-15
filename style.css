@@ -550,10 +550,6 @@ a:hover {
     font-size: 0.94rem !important;
   }
 
-  .contact-row.contact-linkedin {
-    display: none !important;
-  }
-
   .contact-row {
     display: inline-flex !important;
     align-items: center !important;
