@@ -29,6 +29,11 @@
   --accent: DarkSlateBlue;
   --accent-soft: color-mix(in srgb, var(--accent) 8%, #ffffff);
 
+  --brand-entity: firebrick;
+
+  --note-green-border: #166534;
+  --note-green-bg: #f2f9f4;
+
   --secondary: #4b5563;
   --secondary-soft: color-mix(in srgb, var(--secondary) 6%, #ffffff);
 
@@ -174,11 +179,11 @@ a:hover {
   width: var(--contact-icon-size);
   height: var(--contact-icon-size);
   flex-shrink: 0;
-  opacity: 0.75;
-}
-
-.contact-row:hover .contact-icon {
-  opacity: 0.9;
+  display: inline-block;
+  background-color: var(--brand-entity);
+  -webkit-mask: var(--icon-url) no-repeat center / contain;
+  mask: var(--icon-url) no-repeat center / contain;
+  opacity: 0.85;
 }
 
 .contact-value {
@@ -260,7 +265,7 @@ a:hover {
 .item-company {
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--brand-entity);
 }
 
 .item-period {
@@ -377,8 +382,8 @@ a:hover {
 .project-note {
   font-size: 0.92rem;
   color: var(--text-body);
-  background-color: #f9fafb;
-  border-left: 3px solid color-mix(in srgb, var(--secondary) 75%, transparent);
+  background-color: var(--note-green-bg);
+  border-left: 3px solid var(--note-green-border);
   padding: 10px 16px;
   border-radius: 0 6px 6px 0;
   margin: 6px 0;
@@ -567,7 +572,6 @@ a:hover {
   .contact-icon {
     width: 24px !important;
     height: 24px !important;
-    opacity: 0.8 !important;
   }
 
   .main-content {

@@ -155,7 +155,7 @@ function renderizar(dados, autenticado) {
 
                 return `
           <div class="contact-row contact-${tipoClasse}">
-            <img src="${iconePath}" alt="${c.tipo}" class="contact-icon">
+            <span class="contact-icon" style="--icon-url: url('${iconePath}');" aria-hidden="true"></span>
             <span class="contact-value">${linkHtml}</span>
           </div>
         `;
