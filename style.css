@@ -146,11 +146,13 @@ a:hover {
   line-height: 1.2;
 }
 
-.name-web {
+.name-web,
+.role-web {
   display: inline;
 }
 
-.name-pdf {
+.name-pdf,
+.role-pdf {
   display: none;
 }
 
@@ -284,6 +286,10 @@ a:hover {
   font-size: 0.98rem;
   line-height: 1.75;
   color: var(--text-body);
+}
+
+p.item-desc+p.item-desc {
+  margin-top: 6px;
 }
 
 .tags-row {
@@ -445,6 +451,10 @@ a:hover {
   color: var(--text-main) !important;
 }
 
+.project-pdf-link {
+  display: none;
+}
+
 @media (max-width: 900px) {
   .app-container {
     flex-direction: column;
@@ -540,11 +550,13 @@ a:hover {
     white-space: nowrap !important;
   }
 
-  .name-web {
+  .name-web,
+  .role-web {
     display: none !important;
   }
 
-  .name-pdf {
+  .name-pdf,
+  .role-pdf {
     display: inline !important;
   }
 
@@ -595,14 +607,19 @@ a:hover {
 
   .main-content {
     padding: 0 !important;
-    gap: 24px !important;
+    gap: 22px !important;
+  }
+
+  .section-header {
+    margin-bottom: 12px !important;
+    padding-bottom: 4px !important;
   }
 
   .content-section {
     break-inside: auto;
   }
 
-  #formacao {
+  #experiencias {
     break-after: page !important;
     page-break-after: always !important;
   }
@@ -618,8 +635,18 @@ a:hover {
   }
 
   .project-item {
-    padding-bottom: 14px !important;
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
     gap: 4px !important;
+  }
+
+  .project-desc {
+    line-height: 1.55 !important;
+    font-size: 0.94rem !important;
+  }
+
+  .project-name {
+    font-size: 1.12rem !important;
   }
 
   .project-links {
@@ -648,15 +675,29 @@ a:hover {
     display: none !important;
   }
 
-  .project-note,
-  #projectGlobalNote {
+  .project-note {
     display: none !important;
+  }
+
+  .project-pdf-link {
+    display: block !important;
+    font-size: 0.95rem !important;
+    color: var(--text-body) !important;
+    margin-top: 6px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .project-pdf-link a {
+    color: #0969da !important;
+    text-decoration: none;
+    font-weight: 500 !important;
+    word-break: break-all;
   }
 
   .skills-columns {
     display: flex !important;
     flex-direction: column !important;
-    gap: 8px !important;
+    gap: 6px !important;
   }
 
   .skills-column {
@@ -666,7 +707,7 @@ a:hover {
   .skill-block {
     display: block !important;
     break-inside: avoid;
-    line-height: 1.55 !important;
+    line-height: 1.5 !important;
   }
 
   .skill-block-title {

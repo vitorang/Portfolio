@@ -88,7 +88,7 @@ async function descriptografarObjeto(obj, senha) {
     return resultado;
 }
 
-function renderizar(dados, autenticado) {
+function renderizar(dados, autenticado, chave) {
     const lateral = dados.lateral || {};
     const conteudo = dados.conteudo || {};
 
@@ -118,7 +118,13 @@ function renderizar(dados, autenticado) {
     }
 
     if (userRoleEl && lateral.cargo) {
-        userRoleEl.textContent = lateral.cargo;
+        const cargoPrincipal = lateral.cargo;
+        const cargoPdfFinal = lateral.cargoPdf || cargoPrincipal;
+
+        userRoleEl.innerHTML = `
+            <span class="role-web">${cargoPrincipal}</span>
+            <span class="role-pdf">${cargoPdfFinal}</span>
+        `;
     }
 
     const sobre = conteudo.sobre || {};
@@ -188,21 +194,39 @@ function renderizar(dados, autenticado) {
     }
 
     if (expList && itensExp.length > 0) {
+        const baseUrl = lateral.portfolioGithub;
+
         expList.innerHTML = itensExp.map(exp => {
             const tags = (exp.tecnologias || []).map(t => `<span class="tag">${t}</span>`).join('');
+
+            const empresaHtml = exp.empresa ? `
+              <span class="role-separator" style="color: var(--text-muted);">–</span>
+              <span class="item-company">${exp.empresa}</span>` : '';
+
+            let pdfLinkHtml = '';
+            if (exp.notaPdf) {
+                let textoNota = String(exp.notaPdf);
+                // Substitui [GITHUB#ancora] ou [GITHUB]
+                textoNota = textoNota.replace(/\[GITHUB(?:#([a-zA-Z0-9_-]+))?\]/g, (match, ancora) => {
+                    const hash = ancora ? `#${ancora}` : '';
+                    const fullUrl = chave ? `${baseUrl}?k=${encodeURIComponent(chave)}${hash}` : `${baseUrl}${hash}`;
+                    const displayUrl = chave ? `${baseUrl}?k=${chave}` : baseUrl;
+                    return `<a href="${fullUrl}" target="_blank" rel="noopener noreferrer">${displayUrl}</a>`;
+                });
+                pdfLinkHtml = `<p class="project-pdf-link">${textoNota}</p>`;
+            }
 
             return `
         <article class="content-item">
           <div class="item-header">
             <div class="item-role-group">
-              <span class="item-role">${exp.cargo}</span>
-              <span class="role-separator" style="color: var(--text-muted);">–</span>
-              <span class="item-company">${exp.empresa}</span>
+              <span class="item-role">${exp.cargo}</span>${empresaHtml}
             </div>
             <span class="item-period">${exp.periodo}</span>
           </div>
           ${tags ? `<div class="tags-row">${tags}</div>` : ''}
-          <p class="item-desc">${exp.descricao.trim()}</p>
+          ${(exp.descricao || '').trim().split('\n').filter(l => l.trim().length > 0).map(paragrafo => `<p class="item-desc">${paragrafo.trim()}</p>`).join('')}
+          ${pdfLinkHtml}
         </article>
       `;
         }).join('');
@@ -258,19 +282,8 @@ function renderizar(dados, autenticado) {
 
     const projContainer = document.getElementById('projectList');
     const globalNoteEl = document.getElementById('projectGlobalNote');
-
-    let textoGlobal = '';
-    if (typeof conteudo.projetos?.texto === 'string') textoGlobal = conteudo.projetos.texto;
-    else if (typeof conteudo.projetos?.texto?.valor === 'string') textoGlobal = conteudo.projetos.texto.valor;
-    else if (typeof conteudo.projetos?.nota === 'string') textoGlobal = conteudo.projetos.nota;
-    else if (typeof conteudo.projetos?.nota?.valor === 'string') textoGlobal = conteudo.projetos.nota.valor;
-
     if (globalNoteEl) {
-        if (textoGlobal) {
-            globalNoteEl.innerHTML = `<p class="project-desc" style="margin-bottom: 24px;">${textoGlobal.trim()}</p>`;
-        } else {
-            globalNoteEl.innerHTML = '';
-        }
+        globalNoteEl.remove();
     }
 
     if (projContainer && conteudo.projetos?.itens) {
@@ -324,7 +337,7 @@ async function iniciar() {
         }
     }
 
-    renderizar(dadosFinais, autenticado);
+    renderizar(dadosFinais, autenticado, chave ? chave.trim() : '');
 
     const avatarImg = document.getElementById('userAvatar');
     if (avatarImg) {
@@ -340,6 +353,16 @@ async function iniciar() {
 
     const container = document.querySelector('.app-container');
     if (container) container.classList.remove('hidden');
+
+    if (window.location.hash) {
+        const targetId = window.location.hash.substring(1);
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+            requestAnimationFrame(() => {
+                targetEl.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+    }
 }
 
 if (document.readyState === 'complete') {
