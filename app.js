@@ -208,8 +208,8 @@ function renderizar(dados, autenticado, chave) {
                 let textoNota = String(exp.notaPdf);
                 // Substitui [GITHUB#ancora] ou [GITHUB]
                 textoNota = textoNota.replace(/\[GITHUB(?:#([a-zA-Z0-9_-]+))?\]/g, (match, ancora) => {
-                    const hash = ancora ? `#${ancora}` : '';
-                    const fullUrl = chave ? `${baseUrl}?k=${encodeURIComponent(chave)}${hash}` : `${baseUrl}${hash}`;
+                    const secaoParam = ancora ? `&s=${encodeURIComponent(ancora)}` : '';
+                    const fullUrl = chave ? `${baseUrl}?k=${encodeURIComponent(chave)}${secaoParam}` : (ancora ? `${baseUrl}?s=${encodeURIComponent(ancora)}` : baseUrl);
                     const displayUrl = chave ? `${baseUrl}?k=${chave}` : baseUrl;
                     return `<a href="${fullUrl}" target="_blank" rel="noopener noreferrer">${displayUrl}</a>`;
                 });
@@ -354,7 +354,20 @@ async function iniciar() {
     const container = document.querySelector('.app-container');
     if (container) container.classList.remove('hidden');
 
-    if (window.location.hash) {
+    const secaoAlvo = params.get('s');
+    if (secaoAlvo) {
+        const targetEl = document.getElementById(secaoAlvo);
+        if (targetEl) {
+            requestAnimationFrame(() => {
+                targetEl.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+        // Remove 's' da URL sem recarregar a página
+        params.delete('s');
+        const novaQuery = params.toString() ? `?${params.toString()}` : '';
+        const novaUrl = `${window.location.pathname}${novaQuery}${window.location.hash}`;
+        window.history.replaceState({}, '', novaUrl);
+    } else if (window.location.hash) {
         const targetId = window.location.hash.substring(1);
         const targetEl = document.getElementById(targetId);
         if (targetEl) {
